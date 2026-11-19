@@ -19,6 +19,11 @@ keys = dict(developer_token="GOOGLE_ADS_DEVELOPER_TOKEN", client_id="GOOGLE_ADS_
             client_secret="GOOGLE_ADS_CLIENT_SECRET", refresh_token="GOOGLE_ADS_REFRESH_TOKEN",
             login_customer_id="GOOGLE_ADS_LOGIN_CUSTOMER_ID")
 cfg = {k: os.getenv(v) for k, v in keys.items()}
+missing = [v for k, v in keys.items() if k != "login_customer_id" and not cfg[k]]
+if missing:
+    sys.exit("Missing credentials: " + ", ".join(missing) + ". Add them as repository secrets.")
+if not cfg["login_customer_id"]:
+    cfg.pop("login_customer_id")
 cfg["use_proto_plus"] = True
 ga = GoogleAdsClient.load_from_dict(cfg).get_service("GoogleAdsService")
 q = lambda s: list(ga.search(customer_id=CID, query=s))
