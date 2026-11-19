@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Explore Marlborough | Google Ads</title>
+<link rel="icon" href="assets/em-icon.jpg">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="hero">
   <div class="wrap">
     <p class="eyebrow eyebrow--light">Explore Marlborough × Lean In Digital</p>
-    <h1 class="hero__title">Google Ads Performance</h1>
+    <div class="hero__title"><img class="hero__logo" src="assets/em-logo-light.webp" alt="Explore Marlborough"><h1>Google Ads Performance</h1></div>
     <p class="hero__sub" id="hero-sub">Loading…</p>
     <div class="hero__meta">
       <span class="pill" id="updated">Data last updated: …</span>
@@ -32,7 +33,7 @@
 
   <section class="section">
     <p class="eyebrow">Results</p>
-    <h2 id="results-title">Bookings from Google Ads</h2>
+    <div class="section__head"><h2 id="results-title">Bookings from Google Ads</h2><img class="brand-icon" src="assets/em-icon.jpg" alt="Explore Marlborough"></div>
     <p class="section__sub" id="results-sub"></p>
     <div class="kpis" id="kpis"></div>
     <div class="stats" id="stats"></div>
@@ -61,6 +62,19 @@
     <h2>Google Ads vs FareHarbor</h2>
     <p class="section__sub">Checks that every booking Google reports is a real FareHarbor booking, at the right value.</p>
     <div class="notice notice--info">Coming next. Once FareHarbor booking data is connected, this section will match each Google Ads booking to its FareHarbor booking number, flag cancellations, refunds and value differences, and show true ROAS from FareHarbor revenue plus Google Ads' share of all online bookings.</div>
+  </section>
+
+  <section class="section section--tint">
+    <p class="eyebrow">Return on investment</p>
+    <h2>Monthly ROI</h2>
+    <p class="section__sub">Total investment is Google Ads spend plus the NZ$750/month management retainer. Revenue is booking value tracked from Google Ads. Not affected by the date range above.</p>
+    <div class="table-wrap">
+      <table class="table" id="roi-table">
+        <thead><tr><th>Month</th><th class="num">Ad spend</th><th class="num">Management</th><th class="num">Total investment</th><th class="num">Bookings</th><th class="num">Revenue</th><th class="num">Net return</th><th class="num">ROI</th></tr></thead>
+        <tbody></tbody><tfoot></tfoot>
+      </table>
+    </div>
+    <p class="fineprint">ROI = (revenue − total investment) ÷ total investment. Revenue is GA4 booking value until FareHarbor reconciliation is in place. The current month is month to date, and its retainer is shown in full.</p>
   </section>
 
   <section class="section">

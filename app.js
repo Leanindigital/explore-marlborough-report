@@ -68,6 +68,20 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
     let tf = $("#ag-table tfoot"); if (!tf) { tf = document.createElement("tfoot"); $("#ag-table").appendChild(tf); }
     tf.innerHTML = `<tr>${line("Total", t)}</tr>`;
   }
+  // Monthly ROI (whole data set, independent of date filter)
+  const FEE = 750, months = {};
+  data.rows.forEach(r => (months[r.date.slice(0, 7)] = months[r.date.slice(0, 7)] || []).push(r));
+  const roiRow = (label, s, fee) => {
+    const inv = s.cost + fee, net = s.value - inv, roi = inv ? net / inv : null;
+    return `<td>${label}</td><td class="num">${nzd(s.cost, 2)}</td><td class="num">${nzd(fee)}</td><td class="num">${nzd(inv, 2)}</td><td class="num">${int(s.bookings)}</td><td class="num">${nzd(s.value)}</td><td class="num ${net >= 0 ? "pos" : "neg"}">${net < 0 ? "−" : ""}${nzd(Math.abs(net))}</td><td class="num ${net >= 0 ? "pos" : "neg"}">${roi == null ? "–" : Math.round(roi * 100) + "%"}</td>`;
+  };
+  const mk = Object.keys(months).sort(), curMonth = end.slice(0, 7);
+  $("#roi-table tbody").innerHTML = mk.map(k => {
+    const label = new Date(k + "-01T00:00:00").toLocaleDateString("en-NZ", { month: "long", year: "numeric" }) + (k === curMonth ? " (to date)" : k === data.start.slice(0, 7) && data.start.slice(8) !== "01" ? " (from " + fmtDate(data.start).replace(/ \d{4}$/, "") + ")" : "");
+    return `<tr>${roiRow(label, sum(months[k]), FEE)}</tr>`;
+  }).join("");
+  $("#roi-table tfoot").innerHTML = `<tr>${roiRow("Total", sum(data.rows), FEE * mk.length)}</tr>`;
+
   const m = location.hash.match(/range=(\w+)/);
   render(m ? m[1] : "all");
 });

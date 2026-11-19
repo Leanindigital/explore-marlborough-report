@@ -1,4 +1,4 @@
-:root{--blue:#1f6b4f;--blue-dark:#16503b;--soft:#eef6f2;--mute:#b5d6c7;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#0f7a4a;--bad:#b4232c;--r:10px;--font:"Helvetica Neue",Inter,Helvetica,Arial,sans-serif}
+:root{--blue:#00377B;--blue-dark:#002a5e;--soft:#eef3fa;--mute:#a9bdde;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#0f7a4a;--bad:#b4232c;--r:10px;--font:"Helvetica Neue",Inter,Helvetica,Arial,sans-serif}
 *{box-sizing:border-box}
 body{margin:0;font-family:var(--font);color:var(--ink);background:#fff;line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}a{color:var(--blue)}
@@ -43,7 +43,14 @@ h1,h2{margin:0;letter-spacing:-.02em}h2{font-size:clamp(24px,3.2vw,34px)}
 .num{text-align:right!important;font-variant-numeric:tabular-nums}
 .table tfoot td{font-weight:700}
 .notice{margin-top:24px;padding:14px 18px;border-radius:var(--r);background:#fff6e5;border:1px solid #f3d38b;color:#6b4a00;font-size:15px}
-.notice--info{background:#fff;border-color:var(--mute);color:#1d3d30}
+.notice--info{background:#fff;border-color:var(--mute);color:#0b2a55}
 .defs{padding-left:20px;font-size:15px}.defs li{margin:8px 0}
 .footer{margin-top:56px;padding:28px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
 @media(max-width:600px){.week{grid-template-columns:80px 1fr}.week__nums{grid-column:2;text-align:left}}
+
+.hero__title{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.hero__title h1{font-size:inherit;margin:0}
+.hero__logo{height:clamp(44px,6vw,64px);width:auto}
+.section__head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand-icon{height:48px;width:auto}
+.fineprint{font-size:13px;color:var(--muted);margin-top:14px}
+.pos{color:var(--good)}.neg{color:var(--bad)}
