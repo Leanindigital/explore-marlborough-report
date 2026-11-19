@@ -14,6 +14,7 @@ function sum(rows) {
   t.roas = t.cost ? t.value / t.cost : null;
   t.cpc = t.clicks ? t.cost / t.clicks : null;
   t.cvr = t.clicks ? t.bookings / t.clicks : null;
+  t.aov = t.bookings ? t.value / t.bookings : null;
   return t;
 }
 
@@ -37,7 +38,6 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
     wrap.querySelectorAll("button").forEach(b => b.classList.toggle("is-active", b.dataset.id === p[0]));
     const rows = data.rows.filter(r => r.date >= from && r.date <= to);
     const t = sum(rows);
-    $("#hero-sub").textContent = `${int(t.bookings)} bookings worth ${nzd(t.value)} from ${nzd(t.cost)} of ad spend, ${fmtDate(from)} to ${fmtDate(to)}.`;
     $("#results-sub").textContent = `${fmtDate(from)} to ${fmtDate(to)}. Campaign: Search – Biking Tours.`;
     $("#kpis").innerHTML = [
       ["Bookings", int(t.bookings), "GA4 purchases from FareHarbor"],
@@ -47,7 +47,7 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
     ].map(([l, v, s]) => `<div class="kpi"><div class="kpi__label">${l}</div><div class="kpi__value">${v}</div><div class="kpi__sub">${s}</div></div>`).join("");
     $("#stats").innerHTML = [
       ["Ad spend", nzd(t.cost, 2)], ["Impressions", int(t.impr)], ["Clicks", int(t.clicks)],
-      ["Click-through rate", pct(t.ctr)], ["Cost per click", nzd(t.cpc, 2)], ["Click to booking", pct(t.cvr)],
+      ["Click-through rate", pct(t.ctr)], ["Cost per click", nzd(t.cpc, 2)], ["Conversion rate", pct(t.cvr)], ["Average booking value", nzd(t.aov)],
     ].map(([l, v]) => `<div class="stat"><div class="stat__label">${l}</div><div class="stat__value">${v}</div></div>`).join("");
 
     // Weekly (Monday start)
@@ -63,7 +63,7 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
     // Ad groups
     const ag = {};
     rows.forEach(r => (ag[r.ad_group] = ag[r.ad_group] || []).push(r));
-    const line = (n, s) => `<td>${n}</td><td class="num">${nzd(s.cost, 2)}</td><td class="num">${int(s.clicks)}</td><td class="num">${pct(s.ctr)}</td><td class="num">${int(s.bookings)}</td><td class="num">${nzd(s.value)}</td><td class="num">${nzd(s.cpb, 2)}</td><td class="num">${x(s.roas)}</td>`;
+    const line = (n, s) => `<td>${n}</td><td class="num">${nzd(s.cost, 2)}</td><td class="num">${int(s.clicks)}</td><td class="num">${pct(s.ctr)}</td><td class="num">${int(s.bookings)}</td><td class="num">${pct(s.cvr)}</td><td class="num">${nzd(s.value)}</td><td class="num">${nzd(s.aov)}</td><td class="num">${nzd(s.cpb, 2)}</td><td class="num">${x(s.roas)}</td>`;
     $("#ag-table tbody").innerHTML = Object.entries(ag).map(([n, rs]) => [n, sum(rs)]).sort((a, b) => b[1].cost - a[1].cost).map(([n, s]) => `<tr>${line(n, s)}</tr>`).join("");
     let tf = $("#ag-table tfoot"); if (!tf) { tf = document.createElement("tfoot"); $("#ag-table").appendChild(tf); }
     tf.innerHTML = `<tr>${line("Total", t)}</tr>`;
@@ -73,14 +73,19 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
   data.rows.forEach(r => (months[r.date.slice(0, 7)] = months[r.date.slice(0, 7)] || []).push(r));
   const roiRow = (label, s, fee) => {
     const inv = s.cost + fee, net = s.value - inv, roi = inv ? net / inv : null;
-    return `<td>${label}</td><td class="num">${nzd(s.cost, 2)}</td><td class="num">${nzd(fee)}</td><td class="num">${nzd(inv, 2)}</td><td class="num">${int(s.bookings)}</td><td class="num">${nzd(s.value)}</td><td class="num ${net >= 0 ? "pos" : "neg"}">${net < 0 ? "−" : ""}${nzd(Math.abs(net))}</td><td class="num ${net >= 0 ? "pos" : "neg"}">${roi == null ? "–" : Math.round(roi * 100) + "%"}</td>`;
+    return `<td>${label}</td><td class="num">${nzd(s.cost, 2)}</td><td class="num">${nzd(fee, fee % 1 ? 2 : 0)}</td><td class="num">${nzd(inv, 2)}</td><td class="num">${int(s.bookings)}</td><td class="num">${nzd(s.value)}</td><td class="num ${net >= 0 ? "pos" : "neg"}">${net < 0 ? "−" : ""}${nzd(Math.abs(net))}</td><td class="num ${net >= 0 ? "pos" : "neg"}">${roi == null ? "–" : Math.round(roi * 100) + "%"}</td>`;
   };
   const mk = Object.keys(months).sort(), curMonth = end.slice(0, 7);
+  const feeFor = k => { // pro-rate the launch month by days live
+    if (k !== data.start.slice(0, 7)) return FEE;
+    const [y, mo] = k.split("-").map(Number), dim = new Date(Date.UTC(y, mo, 0)).getUTCDate();
+    return Math.round(FEE * (dim - Number(data.start.slice(8)) + 1) / dim * 100) / 100;
+  };
   $("#roi-table tbody").innerHTML = mk.map(k => {
     const label = new Date(k + "-01T00:00:00").toLocaleDateString("en-NZ", { month: "long", year: "numeric" }) + (k === curMonth ? " (to date)" : k === data.start.slice(0, 7) && data.start.slice(8) !== "01" ? " (from " + fmtDate(data.start).replace(/ \d{4}$/, "") + ")" : "");
-    return `<tr>${roiRow(label, sum(months[k]), FEE)}</tr>`;
+    return `<tr>${roiRow(label, sum(months[k]), feeFor(k))}</tr>`;
   }).join("");
-  $("#roi-table tfoot").innerHTML = `<tr>${roiRow("Total", sum(data.rows), FEE * mk.length)}</tr>`;
+  $("#roi-table tfoot").innerHTML = `<tr>${roiRow("Total", sum(data.rows), mk.reduce((a, k) => a + feeFor(k), 0))}</tr>`;
 
   const m = location.hash.match(/range=(\w+)/);
   render(m ? m[1] : "all");
