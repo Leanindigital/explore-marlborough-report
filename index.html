@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Explore Marlborough | Google Ads</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow eyebrow--light">Explore Marlborough × Lean In Digital</p>
+    <h1 class="hero__title">Google Ads Performance</h1>
+    <p class="hero__sub" id="hero-sub">Loading…</p>
+    <div class="hero__meta">
+      <span class="pill" id="updated">Data last updated: …</span>
+      <span class="hero__note">All figures NZD</span>
+    </div>
+    <div class="hero__foot">
+      <span class="eyebrow eyebrow--light">Prepared by</span>
+      <img src="assets/lid-logo-light.png" alt="Lean In Digital">
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="range">
+    <p class="range__label">Date range</p>
+    <div class="period-toggle" id="presets"></div>
+  </div>
+
+  <section class="section">
+    <p class="eyebrow">Results</p>
+    <h2 id="results-title">Bookings from Google Ads</h2>
+    <p class="section__sub" id="results-sub"></p>
+    <div class="kpis" id="kpis"></div>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="section section--tint">
+    <p class="eyebrow">Trend</p>
+    <h2>Week by week</h2>
+    <p class="section__sub">Spend and booking value per week (weeks start Monday).</p>
+    <div class="weeks" id="weeks"></div>
+  </section>
+
+  <section class="section">
+    <p class="eyebrow">Breakdown</p>
+    <h2>By ad group</h2>
+    <div class="table-wrap">
+      <table class="table" id="ag-table">
+        <thead><tr><th>Ad group</th><th class="num">Spend</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">Bookings</th><th class="num">Booking value</th><th class="num">Cost / booking</th><th class="num">ROAS</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <p class="eyebrow">Reconciliation</p>
+    <h2>Google Ads vs FareHarbor</h2>
+    <p class="section__sub">Checks that every booking Google reports is a real FareHarbor booking, at the right value.</p>
+    <div class="notice notice--info">Coming next. Once FareHarbor booking data is connected, this section will match each Google Ads booking to its FareHarbor booking number, flag cancellations, refunds and value differences, and show true ROAS from FareHarbor revenue plus Google Ads' share of all online bookings.</div>
+  </section>
+
+  <section class="section">
+    <p class="eyebrow">How to read this</p>
+    <h2>Definitions</h2>
+    <ul class="defs">
+      <li><b>Bookings</b>: the GA4 <code>purchase</code> event from FareHarbor checkout, as attributed to Google Ads. Enquiries and button clicks are not counted.</li>
+      <li><b>Booking value</b>: the value GA4 sends with each purchase. Not yet checked against FareHarbor, so it may differ for refunds, cancellations, tax or fees.</li>
+      <li><b>ROAS</b>: booking value divided by ad spend. <b>Cost / booking</b> is blank where there are no bookings.</li>
+      <li>Google credits a booking to the day of the ad click, and keeps attributing for several days, so the most recent days can still rise.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="footer"><div class="wrap"><p>Questions? Email <a href="mailto:logan@leanindigital.com">logan@leanindigital.com</a></p></div></footer>
+<script src="app.js"></script>
+</body>
+</html>
