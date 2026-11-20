@@ -21,6 +21,8 @@ keys = dict(developer_token="GOOGLE_ADS_DEVELOPER_TOKEN", client_id="GOOGLE_ADS_
 cfg = {k: (os.getenv(v) or "").strip().strip('"').strip("'") for k, v in keys.items()}
 # Tolerate dashes/spaces in the manager ID (e.g. 123-456-7890).
 cfg["login_customer_id"] = "".join(c for c in cfg["login_customer_id"] if c.isdigit())
+raw = os.getenv("GOOGLE_ADS_LOGIN_CUSTOMER_ID") or ""
+print(f"login_customer_id: {len(raw)} chars, {len(cfg['login_customer_id'])} digits")  # lengths only, never the value
 missing = [v for k, v in keys.items() if k != "login_customer_id" and not cfg[k]]
 if missing:
     sys.exit("Missing credentials: " + ", ".join(missing) + ". Add them as repository secrets.")
