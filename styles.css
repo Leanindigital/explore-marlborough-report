@@ -54,3 +54,6 @@ h1,h2{margin:0;letter-spacing:-.02em}h2{font-size:clamp(24px,3.2vw,34px)}
 .brand-icon{height:48px;width:auto}
 .fineprint{font-size:13px;color:var(--muted);margin-top:14px}
 .pos{color:var(--good)}.neg{color:var(--bad)}
+
+.match-summary{font-size:17px;margin:8px 0 0}
+.fineprint-cell{font-size:13px;color:var(--muted)}
