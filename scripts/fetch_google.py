@@ -18,7 +18,9 @@ load_dotenv(os.path.join(envdir, ".env"))
 keys = dict(developer_token="GOOGLE_ADS_DEVELOPER_TOKEN", client_id="GOOGLE_ADS_CLIENT_ID",
             client_secret="GOOGLE_ADS_CLIENT_SECRET", refresh_token="GOOGLE_ADS_REFRESH_TOKEN",
             login_customer_id="GOOGLE_ADS_LOGIN_CUSTOMER_ID")
-cfg = {k: os.getenv(v) for k, v in keys.items()}
+cfg = {k: (os.getenv(v) or "").strip().strip('"').strip("'") for k, v in keys.items()}
+# Tolerate dashes/spaces in the manager ID (e.g. 123-456-7890).
+cfg["login_customer_id"] = "".join(c for c in cfg["login_customer_id"] if c.isdigit())
 missing = [v for k, v in keys.items() if k != "login_customer_id" and not cfg[k]]
 if missing:
     sys.exit("Missing credentials: " + ", ".join(missing) + ". Add them as repository secrets.")
