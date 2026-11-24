@@ -64,7 +64,7 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
     rows.forEach(r => { const d = new Date(r.date + "T00:00:00Z"); const m = addDays(r.date, -((d.getUTCDay() + 6) % 7)); (weeks[m] = weeks[m] || []).push(r); });
     const wk = Object.keys(weeks).sort().map(k => [k, sum(weeks[k])]);
     const max = Math.max(1, ...wk.map(([, s]) => Math.max(s.cost, s.value)));
-    $("#weeks").innerHTML = wk.map(([k, s]) => `<div class="week"><div>w/c ${new Date(k + "T00:00:00").toLocaleDateString("en-NZ", { day: "numeric", month: "short" })}</div>
+    $("#weeks").innerHTML = wk.map(([k, s]) => `<div class="week"><div>${[k, addDays(k, 6)].map(d => new Date(d + "T00:00:00").toLocaleDateString("en-NZ", { day: "numeric", month: "short" })).join(" – ")}</div>
       <div class="bars"><div class="bar bar--spend" style="width:${s.cost / max * 100}%"></div><div class="bar bar--value" style="width:${s.value / max * 100}%"></div></div>
       <div class="week__nums"><b class="${s.value >= s.cost ? "pos" : "neg"}">${s.cost ? Math.round((s.value - s.cost) / s.cost * 100).toLocaleString("en-NZ") + "% ROI" : "N/A"}</b><br><span>${int(s.bookings)} bkg</span></div></div>`).join("") +
       `<div class="legend"><span><i style="background:#9ca3af"></i>Spend</span><span><i style="background:var(--blue)"></i>Booking value</span></div>`;

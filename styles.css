@@ -30,7 +30,7 @@ h1,h2{margin:0;letter-spacing:-.02em}h2{font-size:clamp(24px,3.2vw,34px)}
 .stat{border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
 .stat__label{font-size:13px;color:var(--muted)}.stat__value{font-size:22px;font-weight:700}
 .weeks{margin-top:24px;display:grid;gap:10px}
-.week{display:grid;grid-template-columns:110px 1fr 120px;gap:12px;align-items:center;font-size:14px}
+.week{display:grid;grid-template-columns:140px 1fr 120px;gap:12px;align-items:center;font-size:14px}
 .bars{display:grid;gap:4px}.bar{height:12px;border-radius:3px;min-width:2px}
 .bar--spend{background:#9ca3af}.bar--value{background:var(--blue)}
 .week__nums{text-align:right;color:var(--muted)}
@@ -60,15 +60,15 @@ h1,h2{margin:0;letter-spacing:-.02em}h2{font-size:clamp(24px,3.2vw,34px)}
 
 .headline{margin-top:14px}
 .gauge{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;border:2px solid var(--line);border-radius:var(--r);padding:12px 18px}
-.gauge--ok{border-color:var(--good);background:#eefaf3}.gauge--over{border-color:var(--bad);background:#fdf0f1}
+.gauge--ok{border-color:var(--good);background:#eefaf3}.gauge--over{border-color:#d1d5db;background:#f3f4f6}
 .gauge .kpi__label{color:var(--muted);opacity:1;font-weight:600}
 .gauge__value{font-size:26px;font-weight:700;line-height:1.1}
-.gauge--ok .gauge__value{color:var(--good)}.gauge--over .gauge__value{color:var(--bad)}
+.gauge--ok .gauge__value{color:var(--good)}.gauge--over .gauge__value{color:var(--ink)}
 .gauge__sub{font-size:14px;color:var(--muted)}
 .gauge__bench{text-align:right;border-left:1px solid var(--line);padding-left:20px}
 .gauge__benchlabel{font-size:13px;color:var(--muted)}.gauge__benchvalue{font-size:18px;font-weight:700}
 .gauge__status{font-size:14px;font-weight:600;margin-top:4px}
-.gauge--ok .gauge__status{color:var(--good)}.gauge--over .gauge__status{color:var(--bad)}
+.gauge--ok .gauge__status{color:var(--good)}.gauge--over .gauge__status{color:var(--muted)}
 .row-camp td{font-weight:700;background:var(--soft)}.indent{padding-left:28px!important}
 .recon{margin-top:16px}.recon summary{cursor:pointer;font-weight:600;color:var(--blue)}
 @media(max-width:600px){.gauge{grid-template-columns:1fr}.gauge__bench{text-align:left;border-left:0;border-top:1px solid var(--line);padding:12px 0 0}}
