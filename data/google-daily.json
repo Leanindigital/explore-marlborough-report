@@ -4,8 +4,8 @@
  "currency": "NZD",
  "time_zone": "Pacific/Auckland",
  "start": "2026-10-15",
- "end": "2026-11-23",
- "generated": "2026-11-23T23:47:12+00:00",
+ "end": "2026-11-24",
+ "generated": "2026-11-24T22:19:53+00:00",
  "bookings_action": "Explore Marlborough - GA4 (web) purchase",
  "rows": [
   {
@@ -917,6 +917,28 @@
    "impr": 1,
    "clicks": 0,
    "cost": 0.0,
+   "bookings": 0.0,
+   "value": 0.0,
+   "other_conv": 0.0
+  },
+  {
+   "date": "2026-11-24",
+   "campaign": "Explore Marlborough \u2013 Search \u2013 Biking Tours // LIDM #1",
+   "ad_group": "Self-Guided \u2013 Core",
+   "impr": 77,
+   "clicks": 11,
+   "cost": 12.65,
+   "bookings": 0.0,
+   "value": 0.0,
+   "other_conv": 0.0
+  },
+  {
+   "date": "2026-11-24",
+   "campaign": "Explore Marlborough \u2013 Search \u2013 Biking Tours // LIDM #1",
+   "ad_group": "Self-Guided \u2013 Near Me",
+   "impr": 3,
+   "clicks": 1,
+   "cost": 1.01,
    "bookings": 0.0,
    "value": 0.0,
    "other_conv": 0.0
