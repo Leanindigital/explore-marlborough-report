@@ -56,7 +56,7 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
     ].map(([l, v, s]) => `<div class="kpi"><div class="kpi__label">${l}</div><div class="kpi__value">${v}</div><div class="kpi__sub">${s}</div></div>`).join("");
     $("#stats").innerHTML = [
       ["Impressions", int(t.impr)], ["Clicks", int(t.clicks)], ["Click-through rate", pct(t.ctr)],
-      ["Cost per click", nzd(t.cpc, 2)], ["Clicks to booking", pct(t.cvr)],
+      ["Cost per click", nzd(t.cpc, 2)], ["Conversion rate", pct(t.cvr)],
     ].map(([l, v]) => `<div class="stat"><div class="stat__label">${l}</div><div class="stat__value">${v}</div></div>`).join("");
 
     // Weekly (Monday start)
@@ -66,7 +66,7 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
     const max = Math.max(1, ...wk.map(([, s]) => Math.max(s.cost, s.value)));
     $("#weeks").innerHTML = wk.map(([k, s]) => `<div class="week"><div>w/c ${new Date(k + "T00:00:00").toLocaleDateString("en-NZ", { day: "numeric", month: "short" })}</div>
       <div class="bars"><div class="bar bar--spend" style="width:${s.cost / max * 100}%"></div><div class="bar bar--value" style="width:${s.value / max * 100}%"></div></div>
-      <div class="week__nums">${nzd(s.cost)} → ${nzd(s.value)} · ${int(s.bookings)} bkg</div></div>`).join("") +
+      <div class="week__nums"><b class="${s.value >= s.cost ? "pos" : "neg"}">${s.cost ? Math.round((s.value - s.cost) / s.cost * 100).toLocaleString("en-NZ") + "% ROI" : "N/A"}</b><br><span>${int(s.bookings)} bkg</span></div></div>`).join("") +
       `<div class="legend"><span><i style="background:#9ca3af"></i>Spend</span><span><i style="background:var(--blue)"></i>Booking value</span></div>`;
 
     // Campaign > ad group
@@ -101,5 +101,5 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
   $("#roi-table tfoot").innerHTML = `<tr>${roiRow("Total", sum(data.rows), mk.reduce((a, k) => a + feeFor(k), 0))}</tr>`;
 
   const m = location.hash.match(/range=(\w+)/);
-  render(m ? m[1] : "last30");
+  render(m ? m[1] : "last7");
 });

@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Explore Marlborough | Google Ads</title>
 <link rel="icon" href="assets/em-icon.jpg">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 <header class="hero">
@@ -34,8 +34,8 @@
     <p class="eyebrow">Results</p>
     <div class="section__head"><h2 id="results-title">Bookings from Google Ads</h2><img class="brand-icon" src="assets/em-icon.jpg" alt="Explore Marlborough"></div>
     <p class="section__sub" id="results-sub"></p>
-    <div class="headline" id="headline"></div>
     <div class="kpis" id="kpis"></div>
+    <div class="headline" id="headline"></div>
     <div class="stats" id="stats"></div>
     <p class="fineprint">Ad spend as % of booking value = Google Ads spend ÷ attributed booking value × 100. Katt's benchmark is under 20%. Shown as N/A when there is no booking value. Google keeps crediting bookings to the click date for several days, so the most recent 2 to 3 days can still rise.</p>
   </section>
@@ -43,7 +43,7 @@
   <section class="section section--tint">
     <p class="eyebrow">Trend</p>
     <h2>Week by week</h2>
-    <p class="section__sub">Spend and booking value per week (weeks start Monday).</p>
+    <p class="section__sub">Spend and booking value per week (weeks start Monday). ROI on ad spend = (booking value − ad spend) ÷ ad spend, excluding the management retainer.</p>
     <div class="weeks" id="weeks"></div>
   </section>
 
@@ -64,13 +64,13 @@
     <p class="eyebrow">Optional manual check</p>
     <h2>Google Ads vs FareHarbor</h2>
     <p class="section__sub">A one-off check that the bookings Google reports are real FareHarbor bookings at the right value. Not a daily feed; re-run on request.</p>
-    <p class="match-summary"><b>20 of 21</b> Google Ads bookings matched to a real FareHarbor online booking: 19 exactly (same day, same value) and 1 probable where GA4 sent the wrong value. 1 unexplained (19 Nov, NZ$252.52).</p>
+    <p class="match-summary"><b>All 16</b> Google Ads bookings from 15 Oct to 15 Nov matched a real FareHarbor online booking: 15 exactly (same day, same value), and 1 on 16 Oct where the booking was real but GA4 sent a lower value (NZ$180 instead of NZ$410).</p>
     <details class="recon"><summary>Show booking-by-booking matches</summary>
     <div class="table-wrap"><table class="table">
       <thead><tr><th>Booked</th><th>Google bookings</th><th>Google value</th><th>FareHarbor</th><th>FareHarbor booking #</th><th>Notes</th></tr></thead>
-      <tbody><tr><td>15 Oct</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>385766133 or 385778881</td><td class="fineprint-cell">Two NZ$140 online bookings that day</td></tr><tr><td>16 Oct</td><td>1</td><td>NZ$180</td><td><span class="pos">✓ Probable</span></td><td>385866010</td><td class="fineprint-cell">The only online booking that day: NZ$410, made on the website, never amended, customer answered "Google". GA4 sent NZ$180 instead of NZ$410, so Google under-reports this one by NZ$230.</td></tr><tr><td>17 Oct</td><td>2</td><td>NZ$1,800</td><td><span class="pos">✓ Confirmed</span></td><td>386011730 + 386112103</td><td class="fineprint-cell">NZ$1,080 + NZ$720</td></tr><tr><td>21 Oct</td><td>2</td><td>NZ$620</td><td><span class="pos">✓ Confirmed</span></td><td>386895899 + 386950276</td><td class="fineprint-cell">NZ$550 + NZ$70</td></tr><tr><td>22 Oct</td><td>1</td><td>NZ$90</td><td><span class="pos">✓ Confirmed</span></td><td>387074514 or 387098064</td><td class="fineprint-cell">Two NZ$90 online bookings that day</td></tr><tr><td>23 Oct</td><td>2</td><td>NZ$380</td><td><span class="pos">✓ Confirmed</span></td><td>387233771 + 387280180</td><td class="fineprint-cell">NZ$140 + NZ$240</td></tr><tr><td>28 Oct</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>One of 4 at NZ$140</td><td class="fineprint-cell">388119115, 388137587, 388152822, 388162009</td></tr><tr><td>2 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>389153492</td><td class="fineprint-cell"></td></tr><tr><td>3 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>389500441</td><td class="fineprint-cell"></td></tr><tr><td>13 Nov</td><td>3</td><td>NZ$715</td><td><span class="pos">✓ Confirmed</span></td><td>391154891 + 391164116 + 391202689</td><td class="fineprint-cell">NZ$225 + NZ$70 + NZ$420</td></tr><tr><td>15 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>391530206</td><td class="fineprint-cell"></td></tr><tr><td>16 Nov</td><td>2</td><td>NZ$280</td><td><span class="pos">✓ Confirmed</span></td><td>391650758 + 391667565</td><td class="fineprint-cell">2 × NZ$140</td></tr><tr><td>17 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>391815551 or 391832337</td><td class="fineprint-cell">Two NZ$140 online bookings that day</td></tr><tr><td>18 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>One of 4 at NZ$140</td><td class="fineprint-cell">391916047, 391934680, 391965041, 391980259</td></tr><tr><td>19 Nov</td><td>1</td><td>NZ$252.52</td><td><span class="neg">✗ Not found</span></td><td>None</td><td class="fineprint-cell">No FareHarbor booking at this value that day (all 5 online bookings checked: none discounted or part-paid). Unexplained; possibly a currency conversion in GA4. At most NZ$252.52 overstated.</td></tr></tbody>
+      <tbody><tr><td>15 Oct</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>385766133 or 385778881</td><td class="fineprint-cell">Two NZ$140 online bookings that day</td></tr><tr><td>16 Oct</td><td>1</td><td>NZ$180</td><td><span class="pos">✓ Probable</span></td><td>385866010</td><td class="fineprint-cell">The only online booking that day: NZ$410, made on the website, never amended, customer answered "Google". GA4 sent NZ$180 instead of NZ$410, so Google under-reports this one by NZ$230.</td></tr><tr><td>17 Oct</td><td>2</td><td>NZ$1,800</td><td><span class="pos">✓ Confirmed</span></td><td>386011730 + 386112103</td><td class="fineprint-cell">NZ$1,080 + NZ$720</td></tr><tr><td>21 Oct</td><td>2</td><td>NZ$620</td><td><span class="pos">✓ Confirmed</span></td><td>386895899 + 386950276</td><td class="fineprint-cell">NZ$550 + NZ$70</td></tr><tr><td>22 Oct</td><td>1</td><td>NZ$90</td><td><span class="pos">✓ Confirmed</span></td><td>387074514 or 387098064</td><td class="fineprint-cell">Two NZ$90 online bookings that day</td></tr><tr><td>23 Oct</td><td>2</td><td>NZ$380</td><td><span class="pos">✓ Confirmed</span></td><td>387233771 + 387280180</td><td class="fineprint-cell">NZ$140 + NZ$240</td></tr><tr><td>28 Oct</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>One of 4 at NZ$140</td><td class="fineprint-cell">388119115, 388137587, 388152822, 388162009</td></tr><tr><td>2 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>389153492</td><td class="fineprint-cell"></td></tr><tr><td>3 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>389500441</td><td class="fineprint-cell"></td></tr><tr><td>13 Nov</td><td>3</td><td>NZ$715</td><td><span class="pos">✓ Confirmed</span></td><td>391154891 + 391164116 + 391202689</td><td class="fineprint-cell">NZ$225 + NZ$70 + NZ$420</td></tr><tr><td>15 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>391530206</td><td class="fineprint-cell"></td></tr></tbody>
     </table></div>
-    <p class="fineprint">Checked 21 Nov 2026 for bookings created 15 Oct to 19 Nov 2026. Google Ads purchase conversions by booking date, matched to FareHarbor online bookings created the same day with the same total. Where several same-priced bookings exist on a day, the match confirms a real booking exists, not which customer. Not re-checked automatically; re-run on request.</p>
+    <p class="fineprint">Checked 21 Nov 2026 for bookings created 15 Oct to 15 Nov 2026 (the first month of ads). Google Ads purchase conversions by booking date, matched to FareHarbor online bookings created the same day with the same total. Where several same-priced bookings exist on a day, the match confirms a real booking exists, not which customer. Not re-checked automatically; re-run on request.</p>
     </details>
   </section>
 
@@ -84,7 +84,7 @@
         <tbody></tbody><tfoot></tfoot>
       </table>
     </div>
-    <p class="fineprint">ROI = (revenue − total investment) ÷ total investment. Revenue is GA4 booking value; 20 of 21 bookings were confirmed against FareHarbor on 21 Nov. The retainer started when ads went live on 15 Oct, so October is pro-rated by days live. The current month is month to date, and its retainer is shown in full.</p>
+    <p class="fineprint">ROI = (revenue − total investment) ÷ total investment. Revenue is GA4 booking value; all 16 bookings in the first month (15 Oct to 15 Nov) were confirmed against FareHarbor. The retainer started when ads went live on 15 Oct, so October is pro-rated by days live. The current month is month to date, and its retainer is shown in full.</p>
   </section>
 
   <section class="section">
@@ -100,6 +100,6 @@
 </main>
 
 <footer class="footer"><div class="wrap"><p>Questions? Email <a href="mailto:logan@leanindigital.com">logan@leanindigital.com</a></p></div></footer>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>
