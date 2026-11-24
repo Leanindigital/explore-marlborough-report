@@ -2,7 +2,9 @@ const $ = s => document.querySelector(s);
 const nzd = (v, dp = 0) => v == null ? "–" : "$" + v.toLocaleString("en-NZ", { minimumFractionDigits: dp, maximumFractionDigits: dp });
 const int = v => Math.round(v).toLocaleString("en-NZ");
 const pct = v => v == null ? "–" : (v * 100).toFixed(1) + "%";
-const x = v => v == null ? "–" : v.toFixed(1) + "x";
+const share = v => v == null ? "N/A" : (v * 100).toFixed(1) + "%";
+const BENCH = 0.20;
+const shareCls = v => v == null ? "" : v < BENCH ? "pos" : "neg";
 const fmtDate = d => new Date(d + "T00:00:00").toLocaleDateString("en-NZ", { day: "numeric", month: "short", year: "numeric" });
 const addDays = (d, n) => { const t = new Date(d + "T00:00:00Z"); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); };
 
@@ -11,7 +13,7 @@ function sum(rows) {
   rows.forEach(r => { for (const k in t) t[k] += r[k]; });
   t.ctr = t.impr ? t.clicks / t.impr : null;
   t.cpb = t.bookings ? t.cost / t.bookings : null;
-  t.roas = t.cost ? t.value / t.cost : null;
+  t.share = t.value > 0 ? t.cost / t.value : null; // ad spend as share of booking value
   t.cpc = t.clicks ? t.cost / t.clicks : null;
   t.cvr = t.clicks ? t.bookings / t.clicks : null;
   t.aov = t.bookings ? t.value / t.bookings : null;
@@ -24,7 +26,6 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
     ["last7", "Last 7 days", addDays(end, -6), end],
     ["last14", "Last 14 days", addDays(end, -13), end],
     ["last30", "Last 30 days", addDays(end, -29), end],
-    ["all", "Since launch", data.start, end],
   ];
   $("#updated").textContent = "Data last updated: " + new Date(data.generated).toLocaleString("en-NZ", { dateStyle: "medium", timeStyle: "short" });
   const wrap = $("#presets");
@@ -33,21 +34,29 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
     b.onclick = () => { location.hash = "range=" + id; render(id); }; wrap.appendChild(b);
   });
   function render(id) {
-    const p = presets.find(p => p[0] === id) || presets[3];
+    const p = presets.find(p => p[0] === id) || presets[2];
     const from = p[2] < data.start ? data.start : p[2], to = p[3];
     wrap.querySelectorAll("button").forEach(b => b.classList.toggle("is-active", b.dataset.id === p[0]));
     const rows = data.rows.filter(r => r.date >= from && r.date <= to);
     const t = sum(rows);
-    $("#results-sub").textContent = `${fmtDate(from)} to ${fmtDate(to)}. Campaign: Search – Biking Tours.`;
+    const days = Math.round((new Date(to) - new Date(from)) / 864e5) + 1;
+    $("#results-sub").textContent = `${fmtDate(from)} to ${fmtDate(to)} (${days} days, to yesterday). All figures NZD.`;
+    const ok = t.share != null && t.share < BENCH;
+    $("#headline").innerHTML = `<div class="gauge ${t.share == null ? "" : ok ? "gauge--ok" : "gauge--over"}">
+      <div><div class="kpi__label">Ad spend as % of booking value</div><div class="gauge__value">${share(t.share)}</div>
+      <div class="gauge__sub">${nzd(t.cost, 2)} spend ÷ ${nzd(t.value)} attributed booking value</div></div>
+      <div class="gauge__bench"><div class="gauge__benchlabel">Katt's benchmark</div><div class="gauge__benchvalue">Under 20%</div>
+      <div class="gauge__status">${t.share == null ? "No booking value in this period" : ok ? "✓ Within benchmark" : "Above benchmark"}</div></div></div>`;
     $("#kpis").innerHTML = [
-      ["Bookings", int(t.bookings), "GA4 purchases from FareHarbor"],
-      ["Booking value", nzd(t.value), "As reported by GA4"],
-      ["Return on ad spend", x(t.roas), "Booking value ÷ spend"],
+      ["Attributed bookings", int(t.bookings), "GA4 purchases credited to Google Ads"],
+      ["Attributed booking value", nzd(t.value), "Value of those bookings"],
+      ["Total Google Ads spend", nzd(t.cost, 2), "All campaigns"],
       ["Cost per booking", nzd(t.cpb, 2), "Spend ÷ bookings"],
+      ["Average booking value", nzd(t.aov), "Booking value ÷ bookings"],
     ].map(([l, v, s]) => `<div class="kpi"><div class="kpi__label">${l}</div><div class="kpi__value">${v}</div><div class="kpi__sub">${s}</div></div>`).join("");
     $("#stats").innerHTML = [
-      ["Ad spend", nzd(t.cost, 2)], ["Impressions", int(t.impr)], ["Clicks", int(t.clicks)],
-      ["Click-through rate", pct(t.ctr)], ["Cost per click", nzd(t.cpc, 2)], ["Conversion rate", pct(t.cvr)], ["Average booking value", nzd(t.aov)],
+      ["Impressions", int(t.impr)], ["Clicks", int(t.clicks)], ["Click-through rate", pct(t.ctr)],
+      ["Cost per click", nzd(t.cpc, 2)], ["Clicks to booking", pct(t.cvr)],
     ].map(([l, v]) => `<div class="stat"><div class="stat__label">${l}</div><div class="stat__value">${v}</div></div>`).join("");
 
     // Weekly (Monday start)
@@ -60,13 +69,17 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
       <div class="week__nums">${nzd(s.cost)} → ${nzd(s.value)} · ${int(s.bookings)} bkg</div></div>`).join("") +
       `<div class="legend"><span><i style="background:#9ca3af"></i>Spend</span><span><i style="background:var(--blue)"></i>Booking value</span></div>`;
 
-    // Ad groups
-    const ag = {};
-    rows.forEach(r => (ag[r.ad_group] = ag[r.ad_group] || []).push(r));
-    const line = (n, s) => `<td>${n}</td><td class="num">${nzd(s.cost, 2)}</td><td class="num">${int(s.clicks)}</td><td class="num">${pct(s.ctr)}</td><td class="num">${int(s.bookings)}</td><td class="num">${pct(s.cvr)}</td><td class="num">${nzd(s.value)}</td><td class="num">${nzd(s.aov)}</td><td class="num">${nzd(s.cpb, 2)}</td><td class="num">${x(s.roas)}</td>`;
-    $("#ag-table tbody").innerHTML = Object.entries(ag).map(([n, rs]) => [n, sum(rs)]).sort((a, b) => b[1].cost - a[1].cost).map(([n, s]) => `<tr>${line(n, s)}</tr>`).join("");
-    let tf = $("#ag-table tfoot"); if (!tf) { tf = document.createElement("tfoot"); $("#ag-table").appendChild(tf); }
-    tf.innerHTML = `<tr>${line("Total", t)}</tr>`;
+    // Campaign > ad group
+    const line = (n, s, cls = "") => `<td class="${cls}">${n}</td><td class="num">${nzd(s.cost, 2)}</td><td class="num">${int(s.clicks)}</td><td class="num">${int(s.bookings)}</td><td class="num">${nzd(s.value)}</td><td class="num">${nzd(s.aov)}</td><td class="num">${nzd(s.cpb, 2)}</td><td class="num ${shareCls(s.share)}">${share(s.share)}</td>`;
+    const camps = {};
+    rows.forEach(r => { const c = camps[r.campaign] = camps[r.campaign] || {}; (c[r.ad_group] = c[r.ad_group] || []).push(r); });
+    const label = n => n.replace(/^Explore Marlborough – /, "").replace(/ \/\/ LIDM #\d+$/, "");
+    $("#ag-table tbody").innerHTML = Object.entries(camps).map(([cn, ags]) => {
+      const all = Object.values(ags).flat();
+      return `<tr class="row-camp">${line(label(cn), sum(all))}</tr>` + Object.entries(ags).map(([n, rs]) => [n, sum(rs)])
+        .sort((a, b) => b[1].cost - a[1].cost).map(([n, s]) => `<tr>${line(n, s, "indent")}</tr>`).join("");
+    }).join("") || `<tr><td colspan="8">No spend in this period.</td></tr>`;
+    $("#ag-table tfoot").innerHTML = `<tr>${line("Total", t)}</tr>`;
   }
   // Monthly ROI (whole data set, independent of date filter)
   const FEE = 750, months = {};
@@ -88,5 +101,5 @@ fetch("data/google-daily.json", { cache: "no-store" }).then(r => r.json()).then(
   $("#roi-table tfoot").innerHTML = `<tr>${roiRow("Total", sum(data.rows), mk.reduce((a, k) => a + feeFor(k), 0))}</tr>`;
 
   const m = location.hash.match(/range=(\w+)/);
-  render(m ? m[1] : "all");
+  render(m ? m[1] : "last30");
 });

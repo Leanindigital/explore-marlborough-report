@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Explore Marlborough | Google Ads</title>
 <link rel="icon" href="assets/em-icon.jpg">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 <header class="hero">
@@ -26,7 +26,7 @@
 
 <main class="wrap">
   <div class="range">
-    <p class="range__label">Date range</p>
+    <p class="range__label">Rolling period</p>
     <div class="period-toggle" id="presets"></div>
   </div>
 
@@ -34,8 +34,10 @@
     <p class="eyebrow">Results</p>
     <div class="section__head"><h2 id="results-title">Bookings from Google Ads</h2><img class="brand-icon" src="assets/em-icon.jpg" alt="Explore Marlborough"></div>
     <p class="section__sub" id="results-sub"></p>
+    <div class="headline" id="headline"></div>
     <div class="kpis" id="kpis"></div>
     <div class="stats" id="stats"></div>
+    <p class="fineprint">Ad spend as % of booking value = Google Ads spend ÷ attributed booking value × 100. Katt's benchmark is under 20%. Shown as N/A when there is no booking value. Google keeps crediting bookings to the click date for several days, so the most recent 2 to 3 days can still rise.</p>
   </section>
 
   <section class="section section--tint">
@@ -47,25 +49,29 @@
 
   <section class="section">
     <p class="eyebrow">Breakdown</p>
-    <h2>By ad group</h2>
+    <h2>What the spend is producing</h2>
+    <p class="section__sub" id="bd-sub">Same rolling period as above, by campaign and ad group. Ad groups are split by what people searched for.</p>
     <div class="table-wrap">
       <table class="table" id="ag-table">
-        <thead><tr><th>Ad group</th><th class="num">Spend</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">Bookings</th><th class="num">Conv. rate</th><th class="num">Booking value</th><th class="num">Avg booking</th><th class="num">Cost / booking</th><th class="num">ROAS</th></tr></thead>
-        <tbody></tbody>
+        <thead><tr><th>Campaign / ad group</th><th class="num">Spend</th><th class="num">Clicks</th><th class="num">Bookings</th><th class="num">Booking value</th><th class="num">Avg booking</th><th class="num">Cost / booking</th><th class="num">Ad spend as % of value</th></tr></thead>
+        <tbody></tbody><tfoot></tfoot>
       </table>
     </div>
+    <div class="notice notice--info"><b>Booked product (bike hire, guided tour, e-bike, group booking)</b> is not available automatically. Google Ads only receives the booking total, not what was booked, and almost all ad clicks land on the self-guided tour page, so the page can't stand in for the product. The ad group above shows what the person searched for, not what they bought. To report by product we would need FareHarbor to pass item details into GA4, or a manual FareHarbor check on request.</div>
   </section>
 
   <section class="section section--tint">
-    <p class="eyebrow">Reconciliation</p>
+    <p class="eyebrow">Optional manual check</p>
     <h2>Google Ads vs FareHarbor</h2>
-    <p class="section__sub">Checks that every booking Google reports is a real FareHarbor booking, at the right value.</p>
+    <p class="section__sub">A one-off check that the bookings Google reports are real FareHarbor bookings at the right value. Not a daily feed; re-run on request.</p>
     <p class="match-summary"><b>20 of 21</b> Google Ads bookings matched to a real FareHarbor online booking: 19 exactly (same day, same value) and 1 probable where GA4 sent the wrong value. 1 unexplained (19 Nov, NZ$252.52).</p>
+    <details class="recon"><summary>Show booking-by-booking matches</summary>
     <div class="table-wrap"><table class="table">
       <thead><tr><th>Booked</th><th>Google bookings</th><th>Google value</th><th>FareHarbor</th><th>FareHarbor booking #</th><th>Notes</th></tr></thead>
       <tbody><tr><td>15 Oct</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>385766133 or 385778881</td><td class="fineprint-cell">Two NZ$140 online bookings that day</td></tr><tr><td>16 Oct</td><td>1</td><td>NZ$180</td><td><span class="pos">✓ Probable</span></td><td>385866010</td><td class="fineprint-cell">The only online booking that day: NZ$410, made on the website, never amended, customer answered "Google". GA4 sent NZ$180 instead of NZ$410, so Google under-reports this one by NZ$230.</td></tr><tr><td>17 Oct</td><td>2</td><td>NZ$1,800</td><td><span class="pos">✓ Confirmed</span></td><td>386011730 + 386112103</td><td class="fineprint-cell">NZ$1,080 + NZ$720</td></tr><tr><td>21 Oct</td><td>2</td><td>NZ$620</td><td><span class="pos">✓ Confirmed</span></td><td>386895899 + 386950276</td><td class="fineprint-cell">NZ$550 + NZ$70</td></tr><tr><td>22 Oct</td><td>1</td><td>NZ$90</td><td><span class="pos">✓ Confirmed</span></td><td>387074514 or 387098064</td><td class="fineprint-cell">Two NZ$90 online bookings that day</td></tr><tr><td>23 Oct</td><td>2</td><td>NZ$380</td><td><span class="pos">✓ Confirmed</span></td><td>387233771 + 387280180</td><td class="fineprint-cell">NZ$140 + NZ$240</td></tr><tr><td>28 Oct</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>One of 4 at NZ$140</td><td class="fineprint-cell">388119115, 388137587, 388152822, 388162009</td></tr><tr><td>2 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>389153492</td><td class="fineprint-cell"></td></tr><tr><td>3 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>389500441</td><td class="fineprint-cell"></td></tr><tr><td>13 Nov</td><td>3</td><td>NZ$715</td><td><span class="pos">✓ Confirmed</span></td><td>391154891 + 391164116 + 391202689</td><td class="fineprint-cell">NZ$225 + NZ$70 + NZ$420</td></tr><tr><td>15 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>391530206</td><td class="fineprint-cell"></td></tr><tr><td>16 Nov</td><td>2</td><td>NZ$280</td><td><span class="pos">✓ Confirmed</span></td><td>391650758 + 391667565</td><td class="fineprint-cell">2 × NZ$140</td></tr><tr><td>17 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>391815551 or 391832337</td><td class="fineprint-cell">Two NZ$140 online bookings that day</td></tr><tr><td>18 Nov</td><td>1</td><td>NZ$140</td><td><span class="pos">✓ Confirmed</span></td><td>One of 4 at NZ$140</td><td class="fineprint-cell">391916047, 391934680, 391965041, 391980259</td></tr><tr><td>19 Nov</td><td>1</td><td>NZ$252.52</td><td><span class="neg">✗ Not found</span></td><td>None</td><td class="fineprint-cell">No FareHarbor booking at this value that day (all 5 online bookings checked: none discounted or part-paid). Unexplained; possibly a currency conversion in GA4. At most NZ$252.52 overstated.</td></tr></tbody>
     </table></div>
     <p class="fineprint">Checked 21 Nov 2026 for bookings created 15 Oct to 19 Nov 2026. Google Ads purchase conversions by booking date, matched to FareHarbor online bookings created the same day with the same total. Where several same-priced bookings exist on a day, the match confirms a real booking exists, not which customer. Not re-checked automatically; re-run on request.</p>
+    </details>
   </section>
 
   <section class="section section--tint">
@@ -85,15 +91,15 @@
     <p class="eyebrow">How to read this</p>
     <h2>Definitions</h2>
     <ul class="defs">
-      <li><b>Bookings</b>: the GA4 <code>purchase</code> event from FareHarbor checkout, as attributed to Google Ads. Enquiries and button clicks are not counted.</li>
+      <li><b>Attributed bookings</b>: the GA4 <code>purchase</code> event from FareHarbor checkout, as attributed to Google Ads. Enquiries and button clicks are not counted.</li>
       <li><b>Booking value</b>: the value GA4 sends with each purchase. Checked against FareHarbor on 21 Nov 2026 (see Google Ads vs FareHarbor).</li>
-      <li><b>ROAS</b>: booking value divided by ad spend. <b>Cost / booking</b> is blank where there are no bookings.</li>
+      <li><b>Ad spend as % of booking value</b>: ad spend ÷ attributed booking value × 100. Lower is better; Katt's benchmark is under 20%. N/A where booking value is zero. <b>Cost / booking</b> and <b>Avg booking</b> show – where there are no bookings.</li>
       <li>Google credits a booking to the day of the ad click, and keeps attributing for several days, so the most recent days can still rise.</li>
     </ul>
   </section>
 </main>
 
 <footer class="footer"><div class="wrap"><p>Questions? Email <a href="mailto:logan@leanindigital.com">logan@leanindigital.com</a></p></div></footer>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>

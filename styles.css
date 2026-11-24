@@ -57,3 +57,18 @@ h1,h2{margin:0;letter-spacing:-.02em}h2{font-size:clamp(24px,3.2vw,34px)}
 
 .match-summary{font-size:17px;margin:8px 0 0}
 .fineprint-cell{font-size:13px;color:var(--muted)}
+
+.headline{margin-top:24px}
+.gauge{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;border:2px solid var(--line);border-radius:var(--r);padding:22px 24px}
+.gauge--ok{border-color:var(--good);background:#eefaf3}.gauge--over{border-color:var(--bad);background:#fdf0f1}
+.gauge .kpi__label{color:var(--muted);opacity:1;font-weight:600}
+.gauge__value{font-size:clamp(40px,7vw,56px);font-weight:700;line-height:1.1}
+.gauge--ok .gauge__value{color:var(--good)}.gauge--over .gauge__value{color:var(--bad)}
+.gauge__sub{font-size:14px;color:var(--muted)}
+.gauge__bench{text-align:right;border-left:1px solid var(--line);padding-left:20px}
+.gauge__benchlabel{font-size:13px;color:var(--muted)}.gauge__benchvalue{font-size:24px;font-weight:700}
+.gauge__status{font-size:14px;font-weight:600;margin-top:4px}
+.gauge--ok .gauge__status{color:var(--good)}.gauge--over .gauge__status{color:var(--bad)}
+.row-camp td{font-weight:700;background:var(--soft)}.indent{padding-left:28px!important}
+.recon{margin-top:16px}.recon summary{cursor:pointer;font-weight:600;color:var(--blue)}
+@media(max-width:600px){.gauge{grid-template-columns:1fr}.gauge__bench{text-align:left;border-left:0;border-top:1px solid var(--line);padding:12px 0 0}}
